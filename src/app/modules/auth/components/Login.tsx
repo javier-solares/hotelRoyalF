@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
-import {login} from '../core/_requests'
+// import {login} from '../core/_requests'
 import {useAuth} from '../core/Auth'
 
 const loginSchema = Yup.object().shape({
@@ -39,9 +39,9 @@ export function Login() {
     onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       try {
-        const {data: auth}: any = await login(values.username, values.password)
-        saveAuth(auth)
-        setCurrentUser(auth)
+        // const {data: auth}: any = await login(values.username, values.password)
+        // saveAuth(auth)
+        setCurrentUser(true)
       } catch (error) {
         saveAuth(undefined)
         setStatus('Usuario o contraseña incorrectos')
@@ -70,7 +70,7 @@ export function Login() {
       ) : (
         <div className='mb-10 bg-light-info p-8 rounded'>
           <div className='text-info'>
-            Usa la cuenta <strong>admin@demo.com</strong> y la contraseña <strong>demo</strong> para
+            Usa la cuenta <strong>de usuario</strong> y la contraseña <strong>asignada</strong> para
             continuar.
           </div>
         </div>

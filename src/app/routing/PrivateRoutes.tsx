@@ -3,11 +3,15 @@ import {Route, Routes, Navigate} from 'react-router-dom'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
-import {MenuTestPage} from '../pages/MenuTestPage'
+// import {MenuTestPage} from '../pages/MenuTestPage'
 import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 import {WithChildren} from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import Rol from '../pages/rol/'
+import Gallery from '../pages/gallery/'
+import Vista2 from '../pages/vista2/'
+import Instalaciones from '../pages/instalaciones/'
+import Ayudarte from '../pages/ayudarte/'
 
 const PrivateRoutes = () => {
   // const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -26,6 +30,10 @@ const PrivateRoutes = () => {
         <Route path='dashboard' element={<DashboardWrapper />} />
         <Route path='builder' element={<BuilderPageWrapper />} />
         <Route path='/rol' element={<Rol />} />
+        <Route path='/gallery' element={<Gallery />} />
+        <Route path='/vista2' element={<Vista2 />} />
+        <Route path='/instalaciones' element={<Instalaciones />} />
+        <Route path='/ayudarte' element={<Ayudarte />} />
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>

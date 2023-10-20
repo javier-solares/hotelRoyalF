@@ -25,6 +25,30 @@ const SidebarMenuMain = () => {
         title='Rol'
         fontIcon='bi-layers'
       />
+      <SidebarMenuItem
+        to='/gallery'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Gallery'
+        fontIcon='bi-layers'
+      />
+       <SidebarMenuItem
+        to='/vista2'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Vista2'
+        fontIcon='bi-layers'
+      />
+       <SidebarMenuItem
+        to='/instalaciones'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Instalaciones'
+        fontIcon='bi-layers'
+      />
+       <SidebarMenuItem
+        to='/ayudarte'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Ayudarte'
+        fontIcon='bi-layers'
+      />
     </>
   )
 }
