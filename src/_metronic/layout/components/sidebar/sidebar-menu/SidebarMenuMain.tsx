@@ -49,6 +49,12 @@ const SidebarMenuMain = () => {
         title='Ayudarte'
         fontIcon='bi-layers'
       />
+      <SidebarMenuItem
+        to='/reservas'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Reservas'
+        fontIcon='bi-layers'
+      />
     </>
   )
 }

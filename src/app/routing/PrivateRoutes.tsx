@@ -1,4 +1,4 @@
-import {lazy, FC, Suspense} from 'react'
+import {FC, Suspense} from 'react'
 import {Route, Routes, Navigate} from 'react-router-dom'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
@@ -12,6 +12,7 @@ import Gallery from '../pages/gallery/'
 import Vista2 from '../pages/vista2/'
 import Instalaciones from '../pages/instalaciones/'
 import Ayudarte from '../pages/ayudarte/'
+import Reservas from '../pages/reservas/'
 
 const PrivateRoutes = () => {
   // const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -34,6 +35,7 @@ const PrivateRoutes = () => {
         <Route path='/vista2' element={<Vista2 />} />
         <Route path='/instalaciones' element={<Instalaciones />} />
         <Route path='/ayudarte' element={<Ayudarte />} />
+        <Route path='/reservas' element={<Reservas />} />
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>
