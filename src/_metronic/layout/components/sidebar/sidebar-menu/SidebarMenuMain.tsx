@@ -28,13 +28,13 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem
         to='/gallery'
         icon='/media/icons/duotune/general/gen025.svg'
-        title='Gallery'
+        title='Galeria'
         fontIcon='bi-layers'
       />
        <SidebarMenuItem
         to='/vista2'
         icon='/media/icons/duotune/general/gen025.svg'
-        title='Vista2'
+        title='Sobre Nosotros'
         fontIcon='bi-layers'
       />
        <SidebarMenuItem
@@ -53,6 +53,36 @@ const SidebarMenuMain = () => {
         to='/reservas'
         icon='/media/icons/duotune/general/gen025.svg'
         title='Reservas'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/check'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Check'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/adminHabitacion'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Habitacion'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/adminReservas'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Reservas'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/tipoPersona'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='tipo Persona'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/listaPersonal'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Personal'
         fontIcon='bi-layers'
       />
     </>

@@ -13,7 +13,11 @@ import Vista2 from '../pages/vista2/'
 import Instalaciones from '../pages/instalaciones/'
 import Ayudarte from '../pages/ayudarte/'
 import Reservas from '../pages/reservas/'
-
+import Check from '../pages/check/'
+import AdminHabitacion from '../pages/adminHabitacion'
+import AdminReservas from '../pages/adminReservas/'
+import TipoPersona from '../pages/tipoPersona/'
+import ListaPersonal from '../pages/listaPersonal/'
 const PrivateRoutes = () => {
   // const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
   // const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
@@ -36,6 +40,11 @@ const PrivateRoutes = () => {
         <Route path='/instalaciones' element={<Instalaciones />} />
         <Route path='/ayudarte' element={<Ayudarte />} />
         <Route path='/reservas' element={<Reservas />} />
+        <Route path='/check' element={<Check />} />
+        <Route path='/adminHabitacion' element={<AdminHabitacion />} />
+        <Route path='/adminReservas' element={<AdminReservas />} />
+        <Route path='/tipoPersona' element={<TipoPersona />} />
+        <Route path='/listaPersonal' element={<ListaPersonal />} />
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />
       </Route>

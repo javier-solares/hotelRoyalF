@@ -9,11 +9,13 @@ export async function GetRoute(url) {
       'Access-Control-Allow-Origin': '*',
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_LOCAL_STORAGE_KEY)).token}`,
+      // Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_LOCAL_STORAGE_KEY)).token}`,
     },
   })
     .then((data) => data.json())
-    .catch(() => [])
+    .catch(() => {
+      return []
+    })
   return await response
 }
 
@@ -22,7 +24,7 @@ export async function GetRoute(url) {
 // **************************************************************************
 export async function PostRoute(url, form) {
   const data = JSON.stringify({
-    usuario: JSON.parse(localStorage.getItem(AUTH_LOCAL_STORAGE_KEY)).id,
+    // usuario: JSON.parse(localStorage.getItem(AUTH_LOCAL_STORAGE_KEY)).id,
     ...form,
   })
   // enviamos el formulario con fetch por el método post
@@ -33,7 +35,7 @@ export async function PostRoute(url, form) {
       'Access-Control-Allow-Origin': '*',
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_LOCAL_STORAGE_KEY)).token}`,
+      // Authorization: `Bearer ${JSON.parse(localStorage.getItem(AUTH_LOCAL_STORAGE_KEY)).token}`,
     },
     body: data,
   })
