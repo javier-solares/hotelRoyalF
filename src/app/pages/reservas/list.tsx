@@ -3,6 +3,7 @@ import { toAbsoluteUrl } from '../../../_metronic/helpers';
 // import FullCalendar from '@fullcalendar/react'
 // import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import Calendar from './calendar/calendar';
+import {ContentProvider} from './calendar/context'
 
 const Index = () => {
   return (
@@ -20,9 +21,9 @@ const Index = () => {
         </div>
       </div>
       </Row>
-      <Row>
-      <Calendar/>
-      </Row>
+      <ContentProvider>
+          <Calendar />
+        </ContentProvider>
     
     </div>
   );

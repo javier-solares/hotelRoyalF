@@ -65,28 +65,6 @@ export const List = () => {
       ),
     },
     {
-      name: 'Descripción',
-      column: 'descripcion',
-      selector: (row: any) => row.descripcion,
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.descripcion,
-    },
-    {
-      name: 'Precio',
-      column: 'precio',
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.precio,
-    },
-    {
-      name: 'Tipo de Habitación',
-      column: 'tipoHabitacion',
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.tipoHabitacion,
-    },
-    {
       name: 'Acciones',
       sortable: true,
       center: true,

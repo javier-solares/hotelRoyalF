@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 export const Formulario = () => {
-  const {handleClose,postStorePersonas} = useContext(ContentContext)
+  const {handleClose,creaetUpdate, oneData,} = useContext(ContentContext)
   const {
       register,
       handleSubmit,
@@ -17,7 +17,7 @@ export const Formulario = () => {
     } = useForm(),
     {toggleModal, show} = useContext(ContentContext),
     onSubmit = (data: any) => {
-      postStorePersonas({...data})
+      creaetUpdate({...data, id: oneData?.id || null})
     },
     setData = async () => {}
 
@@ -64,7 +64,7 @@ export const Formulario = () => {
               type='text'
               placeholder='Segundo Nombre'
               {...register('nombre2', {
-                required: 'Este campo es requerido',
+                // required: 'Este campo es requerido',
               })}
             />
             {/* {errors.campo2 && <p>{errors.campo2.message}</p>} */}
@@ -77,7 +77,7 @@ export const Formulario = () => {
               type='text'
               placeholder='Tercer Nombre'
               {...register('nombre3', {
-                required: 'Este campo es requerido',
+                // required: 'Este campo es requerido',
               })}
             />
             {/* {errors.campo3 && <p>{errors.campo3.message}</p>} */}

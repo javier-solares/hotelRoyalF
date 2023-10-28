@@ -13,12 +13,13 @@ const SidebarMenuMain = () => {
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
       />
-      <SidebarMenuItem
+      {/* <SidebarMenuItem
         to='/builder'
         icon='/media/icons/duotune/general/gen019.svg'
         title='Layout Builder'
         fontIcon='bi-layers'
-      />
+      /> */}
+      
       <SidebarMenuItem
         to='/rol'
         icon='/media/icons/duotune/general/gen024.svg'
@@ -85,7 +86,43 @@ const SidebarMenuMain = () => {
         title='Personal'
         fontIcon='bi-layers'
       />
-    </>
+      <SidebarMenuItem
+        to='/tipoHabitacion'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Tipo Habitacion'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/tipoPago'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Tipo Pago'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/moneda'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Moneda'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/genero'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Genero'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/tarea'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Tarea'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/turnos'
+        icon='/media/icons/duotune/general/gen025.svg'
+        title='Turnos'
+        fontIcon='bi-layers'
+      />
+    </>   
   )
 }
 

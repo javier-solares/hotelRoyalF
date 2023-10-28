@@ -33,7 +33,7 @@ export const ContentProvider: FC<Props> = ({ children }) => {
 
 
   const all = async () => {
-    const response = await GetRoute('Habitaciones/all');
+    const response = await GetRoute('TipoPago/all');
     setAllData(response.data);
   };
 
@@ -44,7 +44,7 @@ export const ContentProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     const fetchLabelData = async () => {
       try {
-        const response = await GetRoute('TipoHabitacion/label');
+        const response = await GetRoute('TipoPago/label');
         if (response.response === 1 && response.data) {
           setLabelData(response.data);
         }
@@ -68,7 +68,7 @@ export const ContentProvider: FC<Props> = ({ children }) => {
   const handleShow = () => setShow(true);
 
   const creaetUpdate = async (data: any) => {
-    const response = await PostRoute(`Habitaciones/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816'});
+    const response = await PostRoute(`TipoPago/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816'});
     all();
     handleClose();
     console.log(response.message);
@@ -76,13 +76,13 @@ export const ContentProvider: FC<Props> = ({ children }) => {
 
 
   const one = async (data: any) => {
-    const response = await PostRoute('Habitaciones/one', data);
+    const response = await PostRoute('TipoPago/one', data);
     setOneData(response.length > 0 ? response[0] : []);
     handleShow();
   };
 
   const state = async (data: any) => {
-    const response = await PostRoute(`Habitaciones/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
+    const response = await PostRoute(`TipoPago/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
     console.log(response.message);
     all();
   };

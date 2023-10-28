@@ -31,9 +31,19 @@ export const ContentProvider: FC<Props> = ({ children }) => {
   const [opcion, setOpcion] = useState<number>(0);
   const [labelData, setLabelData] = useState<Array<{ value: string; label: string }>>([]);
 
+  const toggleModal = (data: number) => {
+    setOpcion(data);
+    if (data === 1) {
+      setOneData([]);
+    }
+    setShow(!show);
+  };
+
+
+
 
   const all = async () => {
-    const response = await GetRoute('Habitaciones/all');
+    const response = await GetRoute('Tarea/all');
     setAllData(response.data);
   };
 
@@ -44,7 +54,7 @@ export const ContentProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     const fetchLabelData = async () => {
       try {
-        const response = await GetRoute('TipoHabitacion/label');
+        const response = await GetRoute('Tarea/label');
         if (response.response === 1 && response.data) {
           setLabelData(response.data);
         }
@@ -56,19 +66,12 @@ export const ContentProvider: FC<Props> = ({ children }) => {
     fetchLabelData();
   }, []);
 
-  const toggleModal = (data: number) => {
-    setOpcion(data);
-    if (data === 1) {
-      setOneData([]);
-    }
-    setShow(!show);
-  };
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const creaetUpdate = async (data: any) => {
-    const response = await PostRoute(`Habitaciones/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816'});
+    const response = await PostRoute(`Tarea/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816'});
     all();
     handleClose();
     console.log(response.message);
@@ -76,13 +79,13 @@ export const ContentProvider: FC<Props> = ({ children }) => {
 
 
   const one = async (data: any) => {
-    const response = await PostRoute('Habitaciones/one', data);
+    const response = await PostRoute('Tarea/one', data);
     setOneData(response.length > 0 ? response[0] : []);
     handleShow();
   };
 
   const state = async (data: any) => {
-    const response = await PostRoute(`Habitaciones/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
+    const response = await PostRoute(`Tarea/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
     console.log(response.message);
     all();
   };

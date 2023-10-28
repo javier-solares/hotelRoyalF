@@ -39,11 +39,19 @@ export const List = () => {
   const basicColumns = [
     {
       name: 'Nombre',
-      column: 'nombre',
-      selector: (row: any) => row.nombre,
+      column: 'turno',
+      selector: (row: any) => row.turno,
       sortable: true,
       center: true,
-      cell: (row: any) => row.nombre,
+      cell: (row: any) => row.turno,
+    },
+    {
+      name: 'Horario',
+      column: 'HorarioCompleto',
+      selector: (row: any) => row.HorarioCompleto,
+      sortable: true,
+      center: true,
+      cell: (row: any) => row.HorarioCompleto,
     },
     {
       name: 'Estado',
@@ -63,28 +71,6 @@ export const List = () => {
           )}
         </>
       ),
-    },
-    {
-      name: 'Descripción',
-      column: 'descripcion',
-      selector: (row: any) => row.descripcion,
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.descripcion,
-    },
-    {
-      name: 'Precio',
-      column: 'precio',
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.precio,
-    },
-    {
-      name: 'Tipo de Habitación',
-      column: 'tipoHabitacion',
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.tipoHabitacion,
     },
     {
       name: 'Acciones',

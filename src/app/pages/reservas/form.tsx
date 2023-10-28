@@ -1,115 +1,107 @@
-import { useContext, useEffect, useState } from 'react';
-import { Button, Modal, Row, Col, Form } from 'react-bootstrap';
-import { ContentContext } from './context';
-import { useForm } from 'react-hook-form';
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import {Fragment, useContext, useEffect, useState} from 'react'
+import {ContentContext} from './context'
+import {useForm, Controller} from 'react-hook-form'
+import {Row, Col, Button, Form, Modal} from 'react-bootstrap'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import Example from './pago/form'
 
-type Inputs = {
-  nombre: string;
-};
-
-function Example() {
-  const { show, handleShow, handleClose, creaetUpdate, oneData } = useContext(ContentContext);
+export const Formulario = () => {
+  const [selectedValue, setSelectedValue] = useState('');
+  const {handleClose,creaetUpdate, oneData,labelData} = useContext(ContentContext)
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<Inputs>();
+      register,
+      handleSubmit,
+      formState: {errors},
+      control,
+      setValue,
+      reset,
+    } = useForm(),
+    {toggleModal, show} = useContext(ContentContext),
+    onSubmit = (data: any) => {
+      creaetUpdate({ ...data, id: oneData?.id || null, habitacion: selectedValue })
+    },
+    setData = async () => {}
 
-  const [startDate, setStartDate] = useState<Date | null>(null); // Inicialmente establecemos startDate como null
-
-  useEffect(() => {
-    if (oneData?.id) {
-      setValue('nombre', oneData?.nombre);
-      if (oneData?.fecha) {
-        setStartDate(new Date(oneData.fecha)); // Establecemos startDate con la fecha existente si está disponible
-      } else {
-        setStartDate(new Date()); // O establecemos startDate con la fecha actual
-      }
-    } else {
-      setStartDate(new Date()); // Si no hay datos, establecemos startDate con la fecha actual
-    }
-  }, [oneData]);
-
-  const onSubmit = (data: Inputs) => {
-    creaetUpdate({ ...data, id: oneData?.id || null, fecha: startDate }); // Asegúrate de incluir la fecha en el objeto de datos que se enviará
-  };
+  // const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null)
 
   return (
-    <>
-      <Button variant="primary" onClick={handleShow}>
-        Crear
+    <Fragment>
+      <Button variant='primary' className='btn-icon' size='sm' onClick={() => toggleModal(1)}>
+        +
       </Button>
-  
-      <Modal size="lg" show={show} onHide={handleClose}>
+
+      <Modal
+        show={show}
+        onHide={() => toggleModal(0)}
+        size='lg'
+        backdrop='static'
+        centered
+        keyboard={false}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Formulario de Reservaciones</Modal.Title>
+          <Modal.Title className='text-uppercase h1'>Reservaciones</Modal.Title>
         </Modal.Header>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body>
-            <Row className="mb-3">
-              <Col lg={6} sm={12}>
-                <Form.Group controlId="validationFormik03">
-                  <Form.Label>Seleccione la Habitacion</Form.Label>
-                  <Form.Control as="select" {...register('nombre', {
-                    required: {
-                      value: true,
-                      message: 'Este campo es requerido',
-                    },
-                  })} isInvalid={!!errors.nombre}>
-                    <option value="">Selecciona una Habitacion</option>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
+          <Row>
+          <Col lg={6} sm={12}>
+                <p>Habitacion</p>
+                <Form.Group controlId="habitacion">
+                  <Form.Control as="select" {...register('habitaciones')}>
+                    <option value="">Selecciona una habitacion</option>
+                    {labelData.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
                   </Form.Control>
-                  <Form.Control.Feedback type="invalid">
-                    {errors?.nombre?.message}
-                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
-            </Row>
-            <Row className="mb-3">
-              <Col lg={6} sm={12}>
-                <Form.Group controlId="validationFormik04">
-                  {/* <Form.Label>Fecha Ingreso</Form.Label> */}
-                  <p>Fecha Ingreso</p>
-                  <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                </Form.Group>
-              </Col>
-              <Col lg={6} sm={12}>
-                <Form.Group controlId="validationFormik05">
-                  {/* <Form.Label>Fecha Salida</Form.Label> */}
-                  <p>Fecha Salida</p>
-                  <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="mb-3">
-              <Col>
-                <Form.Group controlId="textarea">
-                  <Form.Label>Comentario</Form.Label>
-                  <Form.Control as="textarea" rows={5} placeholder="Ingrese su mensaje" />
-                </Form.Group>
-              </Col>
-            </Row>
+      </Row>
+
+      <Row>
+        <Col>
+          <Col lg={6} sm={12}>
+            <p>Fecha Ingreso</p>
+            <Form.Group controlId='fech'>
+              {/* <Form.Label>Fecha Ingreso</Form.Label> */}
+              <Form.Control type="date" {...register('fechaIngreso')} />
+            </Form.Group>
+          </Col>
+        </Col>
+        <Col>
+          <Col lg={6} sm={12}>
+            <p>Fecha Salida</p>
+            <Form.Group controlId='fech'>
+              {/* <Form.Label>Fecha Ingreso</Form.Label> */}
+              <Form.Control type="date" {...register('fechaSalida')} />
+            </Form.Group>
+          </Col>
+        </Col>
+      </Row>
+        <Col>
+          <Form.Group controlId="textarea">
+            <Form.Label>Comentario</Form.Label>
+            <Form.Control as="textarea" rows={5} placeholder="Ingrese su mensaje" {...register('comentario')} />
+          </Form.Group>
+        </Col>
+      <Row>
+      </Row>
           </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-between">
-            <Button variant="secondary" onClick={handleClose}>
+          <Modal.Footer className='d-flex justify-content-between'>
+            <Button variant='secondary' onClick={handleClose}>
               Cerrar
             </Button>
-            <Button variant="primary" type="submit">
-              Reservar
+            <Button variant='primary' type='submit'>
+              Guardar
             </Button>
           </Modal.Footer>
         </Form>
       </Modal>
-    </>
-  );
-  
-  
+    </Fragment>
+  )
 }
 
-export default Example;
+export default Formulario

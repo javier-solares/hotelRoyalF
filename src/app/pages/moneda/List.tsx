@@ -73,18 +73,12 @@ export const List = () => {
       cell: (row: any) => row.descripcion,
     },
     {
-      name: 'Precio',
-      column: 'precio',
+      name: 'Pais',
+      column: 'pais',
+      selector: (row: any) => row.descripcion,
       sortable: true,
       center: true,
-      cell: (row: any) => row.precio,
-    },
-    {
-      name: 'Tipo de Habitación',
-      column: 'tipoHabitacion',
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.tipoHabitacion,
+      cell: (row: any) => row.descripcion,
     },
     {
       name: 'Acciones',
