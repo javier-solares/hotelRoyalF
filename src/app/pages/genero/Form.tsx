@@ -6,7 +6,7 @@ import {Row, Col, Button, Form, Modal} from 'react-bootstrap'
 import 'react-datepicker/dist/react-datepicker.css'
 
 export const Formulario = () => {
-  const {handleClose, creaetUpdate, oneData, } = useContext(ContentContext)
+  const {handleClose, creaetUpdate, oneData,} = useContext(ContentContext)
   const {
       register,
       handleSubmit,
@@ -14,9 +14,25 @@ export const Formulario = () => {
     } = useForm(),
     {toggleModal, show} = useContext(ContentContext),
     onSubmit = (data: any) => {
+      // const json={nombre: data.nombre, id: oneData?.id || null}
       creaetUpdate({...data, id: oneData?.id || null})
     },
-    setData = async () => {}
+    setData = async () => {
+      await setValue('nombre', oneData.nombre)
+      // await setValue('codigo', oneData.codigo)
+    }
+
+    useEffect(
+      () => {
+        async function fetchMyAPI() {
+          if (await oneData) { await setData() } else { reset() }
+        }
+        fetchMyAPI()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [oneData]
+    )
+
+    // setData = async () => {}
 
   // const [startDate, setStartDate] = useState(new Date());
   const [startDate, setStartDate] = useState<Date | null>(null)
@@ -53,8 +69,7 @@ export const Formulario = () => {
                   />
                   {/* {errors.campo1 && <p>{errors.campo1.message}</p>} */}
                 </Form.Group>
-              </Col>
-            
+              </Col>       
             </Row>
           </Modal.Body>
           <Modal.Footer className='d-flex justify-content-between'>

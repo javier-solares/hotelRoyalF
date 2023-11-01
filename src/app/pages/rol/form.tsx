@@ -16,7 +16,20 @@ export const Formulario = () => {
     onSubmit = (data: any) => {
       creaetUpdate({...data, id: oneData?.id || null})
     },
-    setData = async () => {}
+    setData = async () => {
+      await setValue('nombre', oneData.nombre)
+      // await setValue('codigo', oneData.codigo)
+    }
+
+    useEffect(
+      () => {
+        async function fetchMyAPI() {
+          if (await oneData) { await setData() } else { reset() }
+        }
+        fetchMyAPI()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [oneData]
+    )
 
   // const [startDate, setStartDate] = useState(new Date());
   const [startDate, setStartDate] = useState<Date | null>(null)

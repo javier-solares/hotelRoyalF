@@ -8,7 +8,7 @@ const Index = () => {
     <ContentProvider>
       <Formulario />
       <Row>
-        <Col className='d-flex justify-content-center'>Index</Col>
+        <Col className='d-flex justify-content-center'>Catalogo Roles</Col>
       </Row>
       <Listado />
     </ContentProvider>

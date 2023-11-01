@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component'
 import {ContentContext} from './context'
 
 export const List = () => {
-  const {allData} = useContext(ContentContext),
+  const {allData,Actions,one} = useContext(ContentContext),
     [searchValue, setSearchValue] = useState<any>([]),
     [filteredData, setFilteredData] = useState<any>([]),
     handleFilter = (e: any) => {
@@ -76,13 +76,20 @@ export const List = () => {
             data-bs-toggle='dropdown'
             aria-expanded='false'
           >
-            Settings
+            {/* //esto es el nombre que se puede cambiar  */}
+            Settings 
           </button>
           <ul className='dropdown-menu'>
-            <button className='dropdown-item'>{'Visualizar'}</button>
-            {row.idEstado === 1 && <button className='dropdown-item'>{'Actualizar'}</button>}
-            <button className='dropdown-item'>
-              {row.idEstado === 1 ? <Fragment>Desactivar</Fragment> : <Fragment>Activar</Fragment>}
+            <button className='dropdown-item' onClick={() => one(row)}>
+              Visualizar
+            </button>
+            {row.idEstado === 1 && (
+              <button className='dropdown-item' onClick={() => one(row)}>
+                Actualizar
+              </button>
+            )}
+            <button className='dropdown-item' onClick={() => Actions(row)}>
+              {row.idEstado === 1 ? 'Desactivar' : 'Activar'}
             </button>
           </ul>
         </>

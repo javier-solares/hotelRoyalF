@@ -4,7 +4,11 @@ import { GetRoute, PostRoute } from '../../services/private';
 type Props = {
   children?: ReactNode;
 };
-
+interface Data {
+  id: number;
+  idEstado: number;
+  // Otras propiedades si es necesario
+}
 interface ContentContextType {
   toggleModal: (data: number) => void;
   show: boolean;
@@ -17,8 +21,9 @@ interface ContentContextType {
   labelData: Array<{ value: string; label: string }>;
   setLabelData: (data: Array<{ value: string; label: string }>) => void;
   handleSelect: (value: string) => void;
-  state: (data: any) => Promise<void>;
+  // state: (data: any) => Promise<void>;
   one: (data: any) => Promise<any>;
+  Actions: (data: Data) => Promise<void>;
 }
 
 export const ContentContext = createContext<ContentContextType>({} as ContentContextType);
@@ -76,14 +81,21 @@ export const ContentProvider: FC<Props> = ({ children }) => {
 
 
   const one = async (data: any) => {
-    const response = await PostRoute('TipoHabitacion/one', data);
-    setOneData(response.length > 0 ? response[0] : []);
+    const response = await PostRoute('TipoHabitacion/one', {id: data.id});
+    setOneData(response.data.length? response.data[0]:[]);
     handleShow();
   };
 
-  const state = async (data: any) => {
-    const response = await PostRoute(`TipoHabitacion/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
-    console.log(response.message);
+  // const state = async (data: any) => {
+  //   const response = await PostRoute(`TipoHabitacion/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
+  //   console.log(response.message);
+  //   all();
+  // };
+  const Actions = async (data:any) => {
+    const response = await PostRoute(`TipoHabitacion/status`, {
+      id: data.id,
+      estado: data.idEstado === 1 ? 0 : 1,
+    })
     all();
   };
 
@@ -97,7 +109,7 @@ export const ContentProvider: FC<Props> = ({ children }) => {
     creaetUpdate,
     handleShow,
     toggleModal,
-    state,
+    Actions,
     one,
     labelData,
     setLabelData,

@@ -9,7 +9,12 @@ const FooterWrapper = () => {
   }
 
   return (
-    <div className='app-footer' id='kt_app_footer'>
+    <div className='app-footer' id='kt_app_footer' style={{
+      position: 'fixed',
+      bottom: 0,
+      // left: 100,
+      width: '86%',
+    }}>
       {config.app.footer.containerClass ? (
         <div className={clsx('app-container', config.app.footer.containerClass)}>
           <Footer />

@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 // import {login} from '../core/_requests'
 import {useAuth} from '../core/Auth'
+import { PostLogin } from '../../../../app/services/private';
 
 const loginSchema = Yup.object().shape({
   username: Yup.string()
@@ -39,8 +40,8 @@ export function Login() {
     onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       try {
-        // const {data: auth}: any = await login(values.username, values.password)
-        // saveAuth(auth)
+        const {data: auth}: any = await PostLogin('Login/login',{username:values.username, password:values.password})
+        saveAuth(auth)
         setCurrentUser(true)
       } catch (error) {
         saveAuth(undefined)

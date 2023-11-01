@@ -1,40 +1,39 @@
-import {Fragment, useContext, useState} from 'react'
-import {Row, Col, Form} from 'react-bootstrap'
-
-import DataTable from 'react-data-table-component'
-import {ContentContext} from './context'
+import { Fragment, useContext, useState } from 'react';
+import { Row, Col, Form } from 'react-bootstrap';
+import DataTable from 'react-data-table-component';
+import { ContentContext } from './context';
 
 export const List = () => {
-  const {allData} = useContext(ContentContext),
-    [searchValue, setSearchValue] = useState<any>([]),
-    [filteredData, setFilteredData] = useState<any>([]),
-    handleFilter = (e: any) => {
-      const value = String(e.target.value)
-      let updatedData: any = []
-      setSearchValue(value)
+  const { allData,Actions,one,oneUpdate } = useContext(ContentContext);
+  const [searchValue, setSearchValue] = useState<any>('');
+  const [filteredData, setFilteredData] = useState<any>([]);
+  
+  const handleFilter = (e: any) => {
+    const value = e.target.value;
+    setSearchValue(value);
 
-      if (value.length) {
-        updatedData = allData.filter((item: any) => {
-          const startsWith =
-            item.noInventario.startsWith(value) ||
-            item.noBienSicoin.startsWith(value) ||
-            item.nombre.toLowerCase().startsWith(value.toLowerCase())
+    if (value.length) {
+      const updatedData = allData.filter((item: any) => {
+        const startsWith =
+          // item.noInventario.startsWith(value) || //sirven cuando son numeros
+          // item.noBienSicoin.startsWith(value) ||
+          item.nombre.toLowerCase().startsWith(value.toLowerCase()) ||  //este es para texto cadena de texto
+          item.estado.toLowerCase().startsWith(value.toLowerCase());
 
-          const includes =
-            item.noInventario.includes(value) ||
-            item.noBienSicoin.includes(value) ||
-            item.nombre.toLowerCase().startsWith(value.toLowerCase())
+        const includes =
+          // item.noInventario.includes(value) ||
+          // item.noBienSicoin.includes(value) ||
+          item.nombre.toLowerCase().includes(value.toLowerCase()) ||
+          item.estado.toLowerCase().includes(value.toLowerCase());
 
-          if (startsWith) {
-            return startsWith
-          } else if (!startsWith && includes) {
-            return includes
-          } else return null
-        })
-        setFilteredData(updatedData)
-        setSearchValue(value)
-      }
+        return startsWith || includes;
+      });
+
+      setFilteredData(updatedData);
+    } else {
+      setFilteredData([]);
     }
+  };
 
   const basicColumns = [
     {
@@ -51,17 +50,9 @@ export const List = () => {
       sortable: true,
       center: true,
       cell: (row: any) => (
-        <>
-          {row.estado === 'Activo' ? (
-            <div className='text-center text-success'>
-              <p>{row.estado}</p>
-            </div>
-          ) : (
-            <div className='text-center text-danger'>
-              <p>{row.estado}</p>
-            </div>
-          )}
-        </>
+        <div className={`text-center ${row.estado === 'Activo' ? 'text-success' : 'text-danger'}`}>
+          <p>{row.estado}</p>
+        </div>
       ),
     },
     {
@@ -76,19 +67,26 @@ export const List = () => {
             data-bs-toggle='dropdown'
             aria-expanded='false'
           >
-            Settings
+            {/* //esto es el nombre que se puede cambiar  */}
+            Settings 
           </button>
           <ul className='dropdown-menu'>
-            <button className='dropdown-item'>{'Visualizar'}</button>
-            {row.idEstado === 1 && <button className='dropdown-item'>{'Actualizar'}</button>}
-            <button className='dropdown-item'>
-              {row.idEstado === 1 ? <Fragment>Desactivar</Fragment> : <Fragment>Activar</Fragment>}
+            <button className='dropdown-item' onClick={() => one(row)}>
+              Visualizar
+            </button>
+            {row.idEstado === 1 && (
+              <button className='dropdown-item' onClick={() => oneUpdate(row)}>
+                Actualizar
+              </button>
+            )}
+            <button className='dropdown-item' onClick={() => Actions(row)}>
+              {row.idEstado === 1 ? 'Desactivar' : 'Activar'}
             </button>
           </ul>
         </>
       ),
     },
-  ]
+  ];
 
   return (
     <Fragment>
@@ -116,13 +114,13 @@ export const List = () => {
         className='table-responsive'
         paginationRowsPerPageOptions={[10, 25, 50, 100]}
         paginationComponentOptions={{
-          rowsPerPageText: 'Filas por pagina',
+          rowsPerPageText: 'Filas por página',
           rangeSeparatorText: 'de',
         }}
         noDataComponent={'Sin datos'}
       />
     </Fragment>
-  )
-}
+  );
+};
 
-export default List
+export default List;

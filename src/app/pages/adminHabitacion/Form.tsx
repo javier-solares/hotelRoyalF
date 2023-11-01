@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 export const Formulario = () => {
-  const {handleClose, creaetUpdate, oneData, labelData} = useContext(ContentContext)
+  const {handleClose, creaetUpdate, oneData, labelData,oneUpdate} = useContext(ContentContext)
   const [selectedValue, setSelectedValue] = useState('');
 
   const handleSelect = (e: React.ChangeEvent<unknown>) => {
@@ -26,7 +26,22 @@ export const Formulario = () => {
       // creaetUpdate({...data, id: oneData?.id || null})
       creaetUpdate({ ...data, id: oneData?.id || null, habitacion: selectedValue });
     },
-    setData = async () => {}
+    setData = async () => {
+      await setValue('nombre', oneData.nombre)
+      await setValue('precio', oneData.precio)      
+      await setValue('tipoHabitacion', oneData.tipoHabitacion)
+      await setValue('descripcion', oneData.descripcion)
+    }
+
+    useEffect(
+      () => {
+        async function fetchMyAPI() {
+          if (await oneData) { await setData() } else { reset() }
+        }
+        fetchMyAPI()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [oneData]
+    )
 
   // const [startDate, setStartDate] = useState(new Date());
   // const [startDate, setStartDate] = useState<Date | null>(null)
@@ -79,7 +94,7 @@ export const Formulario = () => {
               </Col>
 
               <Col lg={6} sm={12}>
-                <p>Persona</p>
+                <p>Tipo Habitacion</p>
                 <Form.Group controlId="habitacion">
                   <Form.Control as="select" {...register('tipoHabitacion')}>
                     <option value="">Selecciona un tipo habitacion</option>
@@ -97,7 +112,7 @@ export const Formulario = () => {
               <Col>
                 <Form.Group controlId='textarea'>
                   <Form.Label>Comentario</Form.Label>
-                  <Form.Control as='textarea' rows={5} placeholder='Ingrese su mensaje' />
+                  <Form.Control as='textarea' rows={5} placeholder='Ingrese su mensaje' {...register('descripcion')}/>
                 </Form.Group>
               </Col>
             </Row>

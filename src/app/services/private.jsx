@@ -45,8 +45,28 @@ export async function PostRoute(url, form) {
   return await response
 }
 
+export async function PostLogin(url, form) {
+  const data = JSON.stringify({
+    ...form,
+  })
+
+  // elviamos el formulario con fetch por el metodo post
+  const response = await fetch(`${RouteBase}/${url}`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: data,
+  })
+  return await response
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   GetRoute,
   PostRoute,
+  PostLogin,
 }

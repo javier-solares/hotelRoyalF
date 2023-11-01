@@ -5,7 +5,7 @@ import DataTable from 'react-data-table-component'
 import {ContentContext} from './context'
 
 export const List = () => {
-  const {allData} = useContext(ContentContext),
+  const {allData,Actions,one,oneUpdate} = useContext(ContentContext),
     [searchValue, setSearchValue] = useState<any>([]),
     [filteredData, setFilteredData] = useState<any>([]),
     handleFilter = (e: any) => {
@@ -16,14 +16,18 @@ export const List = () => {
       if (value.length) {
         updatedData = allData.filter((item: any) => {
           const startsWith =
-            item.noInventario.startsWith(value) ||
-            item.noBienSicoin.startsWith(value) ||
-            item.nombre.toLowerCase().startsWith(value.toLowerCase())
+            // item.noInventario.startsWith(value) ||
+            // item.noBienSicoin.startsWith(value) ||
+            item.nombre.toLowerCase().startsWith(value.toLowerCase()) || 
+            item.tipoHabitacion.toLowerCase().startsWith(value.toLowerCase()) || 
+            item.estado.toLowerCase().startsWith(value.toLowerCase()); 
 
           const includes =
-            item.noInventario.includes(value) ||
-            item.noBienSicoin.includes(value) ||
-            item.nombre.toLowerCase().startsWith(value.toLowerCase())
+            // item.noInventario.includes(value) ||
+            // item.noBienSicoin.includes(value) ||
+            item.nombre.toLowerCase().startsWith(value.toLowerCase()) || 
+            item.tipoHabitacion.toLowerCase().startsWith(value.toLowerCase()) || 
+            item.estado.toLowerCase().includes(value.toLowerCase());
 
           if (startsWith) {
             return startsWith
@@ -45,25 +49,7 @@ export const List = () => {
       center: true,
       cell: (row: any) => row.nombre,
     },
-    {
-      name: 'Estado',
-      column: 'estado',
-      sortable: true,
-      center: true,
-      cell: (row: any) => (
-        <>
-          {row.estado === 'Activo' ? (
-            <div className='text-center text-success'>
-              <p>{row.estado}</p>
-            </div>
-          ) : (
-            <div className='text-center text-danger'>
-              <p>{row.estado}</p>
-            </div>
-          )}
-        </>
-      ),
-    },
+   
     {
       name: 'Descripción',
       column: 'descripcion',
@@ -87,6 +73,25 @@ export const List = () => {
       cell: (row: any) => row.tipoHabitacion,
     },
     {
+      name: 'Estado',
+      column: 'estado',
+      sortable: true,
+      center: true,
+      cell: (row: any) => (
+        <>
+          {row.estado === 'Activo' ? (
+            <div className='text-center text-success'>
+              <p>{row.estado}</p>
+            </div>
+          ) : (
+            <div className='text-center text-danger'>
+              <p>{row.estado}</p>
+            </div>
+          )}
+        </>
+      ),
+    },
+    {
       name: 'Acciones',
       sortable: true,
       center: true,
@@ -98,13 +103,20 @@ export const List = () => {
             data-bs-toggle='dropdown'
             aria-expanded='false'
           >
-            Settings
+            {/* //esto es el nombre que se puede cambiar  */}
+            Settings 
           </button>
           <ul className='dropdown-menu'>
-            <button className='dropdown-item'>{'Visualizar'}</button>
-            {row.idEstado === 1 && <button className='dropdown-item'>{'Actualizar'}</button>}
-            <button className='dropdown-item'>
-              {row.idEstado === 1 ? <Fragment>Desactivar</Fragment> : <Fragment>Activar</Fragment>}
+            <button className='dropdown-item' onClick={() => one(row)}>
+              Visualizar
+            </button>
+            {row.idEstado === 1 && (
+              <button className='dropdown-item' onClick={() => oneUpdate(row)}>
+                Actualizar
+              </button>
+            )}
+            <button className='dropdown-item' onClick={() => Actions(row)}>
+              {row.idEstado === 1 ? 'Desactivar' : 'Activar'}
             </button>
           </ul>
         </>

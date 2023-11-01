@@ -9,7 +9,9 @@ const Index = () => {
   return (
     <Fragment>
       <ContentProvider>
+        {/* ROW FILAS */}
       <Row>
+        {/* COL COLUMNAS */}
           <Col className='d-flex justify-content-end mb-5'>
           <Formulario/>
           </Col>
