@@ -1,5 +1,6 @@
 import {createContext, useState, ReactNode, useEffect} from 'react'
 import {GetRoute, PostRoute} from '../../services/private'
+import useSWR, { mutate } from 'swr';
 
 interface ContentContextType {
   toggleModal: (data: number) => void
@@ -50,42 +51,69 @@ export const ContentProvider: React.FC<{children: ReactNode}> = ({children}) => 
     }
     setShow(!show)
   }
+////////////////////////////////////////////////////////////////
+const fetcher = (url: string) => GetRoute(url);
+const apiKeyAll = 'Reserva/all';
+const apiKeyLabel = 'Habitaciones/label';
 
-  const all = async () => {
-    const response = await GetRoute('Reserva/all');
-    setAllData(response.data);
-  };
+const { data: allDataFromSWR } = useSWR(apiKeyAll, fetcher);
+const { data: labelDataFromSWR } = useSWR(apiKeyLabel, fetcher);
 
-  // const getAllPersonas = async () => {
-  //   const response = await GetRoute('Persona/all')
-  //   setAllData(response.data)
-  //   console.log(response)
-  // }
+useEffect(() => {
+  if (allDataFromSWR && allDataFromSWR.value === 1) {
+    setAllData(allDataFromSWR.data)
+  }
+}, [allDataFromSWR])
+
+useEffect(() => {
+  if (labelDataFromSWR && labelDataFromSWR.value === 1) {
+    setLabelData(labelDataFromSWR.data)
+  }
+}, [labelDataFromSWR])
+
+
+
+
+
+////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+  // const all = async () => {
+  //   const response = await GetRoute('Reserva/all');
+  //   setAllData(response.data);
+  // };
+
 
   const handleSelect = (value: string) => {
     console.log(`Seleccionaste: ${value}`);
   };
 
-  useEffect(() => {
-    const fetchLabelData = async () => {
-      try {
-        const response = await GetRoute('Habitaciones/label');
-        if (response.response === 1 && response.data) {
-          setLabelData(response.data);
-        }
-      } catch (error) {
-        console.error('Error al obtener opciones: ', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchLabelData = async () => {
+  //     try {
+  //       const response = await GetRoute('Habitaciones/label');
+  //       if (response.response === 1 && response.data) {
+  //         setLabelData(response.data);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error al obtener opciones: ', error);
+  //     }
+  //   };
 
-    fetchLabelData();
-  }, []);
+  //   fetchLabelData();
+  // }, []);
 
   const creaetUpdate = async (data: any) => {
     const response = await PostRoute(`Reserva/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816', persona:2});
-    all();
+    // all();
     handleClose();
     console.log(response.message);
+    mutate(apiKeyAll);
 };
 
 
@@ -98,7 +126,7 @@ export const ContentProvider: React.FC<{children: ReactNode}> = ({children}) => 
   const state = async (data: any) => {
     const response = await PostRoute(`Reserva/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
     console.log(response.message);
-    all();
+    // all();
   };
 
   const volver = (stp: string) => {
@@ -108,9 +136,10 @@ export const ContentProvider: React.FC<{children: ReactNode}> = ({children}) => 
 
   const storeCreaetUpdate = async (data: any) => {
     const response = await PostRoute(`Reserva/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816'});
-    all();
+    // all();
     handleClose();
     console.log(response.message);
+    mutate(apiKeyAll);
 };
 
 
@@ -123,7 +152,7 @@ export const ContentProvider: React.FC<{children: ReactNode}> = ({children}) => 
   const storeState = async (data: any) => {
     const response = await PostRoute(`Reserva/${data?.estado === 1 ? 'destroy' : 'active'}`, data);
     console.log(response.message);
-    all();
+    // all();
   };
   const value: any = {
     toggleModal,
@@ -148,8 +177,8 @@ export const ContentProvider: React.FC<{children: ReactNode}> = ({children}) => 
     allData,
     labelData,
   }
-  useEffect(() => {
-    all();
-  }, []);
+  // useEffect(() => {
+  //   all();
+  // }, []);
   return <ContentContext.Provider value={value}>{children}</ContentContext.Provider>
 }

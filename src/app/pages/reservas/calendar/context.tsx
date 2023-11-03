@@ -1,5 +1,6 @@
 import {createContext, FC, ReactNode, useState, useEffect} from 'react'
 import {GetRoute, PostRoute} from '../../../services/private'
+import useSWR, { mutate } from 'swr';
 type Props = {
   children?: ReactNode
 }
@@ -49,20 +50,48 @@ export const ContentProvider: FC<Props> = ({children}) => {
   const [reservaData, setReservaData] = useState<Reserva[]>([]);
   
 
+  // const loadReservaData = async () => {
+  //   try {
+  //     const response = await GetRoute('Reserva/all');
+  //     setReservaData(response.data);
+  //     setAllData(response.length > 0 ? response : []);
+  //   } catch (error) {
+  //     console.error('Error al cargar los datos de reserva: ', error);
+  //   }
+  // };
+  
+  // useEffect(() => {
+  //   // Llama a la función para cargar los datos de reserva al iniciar el contexto
+  //   loadReservaData();
+  // }, []);
+
+  const fetcher = (url: string) => GetRoute(url);
+
+  const apiKeyAll = 'Reserva/all';
+  const { data: allDataFromSWR } = useSWR(apiKeyAll, fetcher);
+
   const loadReservaData = async () => {
     try {
-      const response = await GetRoute('Reserva/all');
-      setReservaData(response.data);
-      setAllData(response.length > 0 ? response : []);
+      // No necesitas hacer una llamada directa a GetRoute aquí
+      // SWR se encargará de esto automáticamente
+
+      // Solo verifica si los datos de SWR están disponibles
+      if (allDataFromSWR) {
+        setReservaData(allDataFromSWR.data);
+      }
     } catch (error) {
       console.error('Error al cargar los datos de reserva: ', error);
     }
+    mutate(apiKeyAll);
   };
-  
+
   useEffect(() => {
     // Llama a la función para cargar los datos de reserva al iniciar el contexto
     loadReservaData();
-  }, []);
+  }, [allDataFromSWR]); // Agrega allDataFromSWR como dependencia
+
+console.log(allDataFromSWR)
+  
 
   const all = async () => {
     const response = await GetRoute('Reserva/all')
@@ -74,9 +103,10 @@ export const ContentProvider: FC<Props> = ({children}) => {
 
   const creaetUpdate = async (data: Reserva) => {
     const response = await PostRoute(`Reserva/${!data?.id ? 'create' : 'update'}`, data)
-    all()
+    // all()
     handleClose()
     console.log(response.message)
+    mutate(apiKeyAll);
   }
 
   const one = async (data: any) => {

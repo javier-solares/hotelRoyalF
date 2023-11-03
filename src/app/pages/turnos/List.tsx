@@ -18,7 +18,7 @@ export const List = () => {
           const startsWith =
             // item.noInventario.startsWith(value) ||
             // item.noBienSicoin.startsWith(value) ||
-            item.turno.toLowerCase().startsWith(value.toLowerCase())
+            item.turno.toLowerCase().startsWith(value.toLowerCase()) 
 
           const includes =
             // item.noInventario.includes(value) ||
