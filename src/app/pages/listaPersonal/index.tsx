@@ -2,9 +2,9 @@ import {Fragment} from 'react'
 import {Row, Col} from 'react-bootstrap'
 import {ContentProvider} from './context'
 
-// import Formulario from './Form'
+import Formulario from './Form'
 import List from './List'
-import DatosEmpleado from './datosEmpleado'
+// import DatosEmpleado from './datosEmpleado'
 // import FormularioP from './principalForm'
 
 const Index = () => {
@@ -13,7 +13,8 @@ const Index = () => {
       <ContentProvider>
       <Row>
           <Col className='d-flex justify-content-end mb-5'>
-          <DatosEmpleado/>
+          {/* <DatosEmpleado/> */}
+          <Formulario/>
           </Col>
       </Row>
         <Row>

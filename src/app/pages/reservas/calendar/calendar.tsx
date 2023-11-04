@@ -38,6 +38,14 @@ const Calendar = () => {
     // createNewEvent(arg.dateStr);
   };
 
+  const handleDatesSet = (dateInfo: any) => {
+    // Aquí puedes personalizar las fechas que se muestran en el calendario.
+    // Por ejemplo, si deseas mostrar fechas pasadas, puedes hacer lo siguiente:
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Configura la hora a medianoche para que incluya el día actual
+    dateInfo.start = today; // Establece la fecha de inicio en el día actual
+  };
+
   return (
     <div>
       <Card>
@@ -52,11 +60,12 @@ const Calendar = () => {
             dayMaxEvents
             nowIndicator
             themeSystem='bootstrap'
-            validRange={{ start: new Date() }}
+            // validRange={{ start: new Date() }}
             locale={esLocale}
             events={events}
             eventClick={OpenEvent}
             dateClick={handleDateClick}
+            datesSet={handleDatesSet}
           />
         </Card.Body>
       </Card>

@@ -82,6 +82,7 @@ export const Formulario = () => {
                 </Form.Group>
               </Col>
             </Row>
+            
           </Modal.Body>
           <Modal.Footer className='d-flex justify-content-between'>
             <Button variant='secondary' onClick={handleClose}>

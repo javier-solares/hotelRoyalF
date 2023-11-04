@@ -1,5 +1,6 @@
 import { createContext, FC, ReactNode, useState, useEffect } from 'react';
 import { GetRoute, PostRoute } from '../../services/private';
+import useSWR, { mutate } from 'swr';
 
 type Props = {
   children?: ReactNode;
@@ -40,11 +41,37 @@ export const ContentProvider: FC<Props> = ({ children }) => {
   const [labelData, setLabelData] = useState<Array<{ value: string; label: string }>>([]);
 
 
-  const all = async () => {
-    const response = await GetRoute('Habitaciones/all');
-    setAllData(response.data);
-    // all();
-  };
+  // const all = async () => {
+  //   const response = await GetRoute('Habitaciones/all');
+  //   setAllData(response.data);
+  //   // all();
+  // };
+
+////////////////////////////////////////////////////////////////
+const fetcher = (url: string) => GetRoute(url);
+const apiKeyAll = 'Habitaciones/all';
+const apiKeyLabel = 'TipoHabitacion/label';
+
+const { data: allDataFromSWR } = useSWR(apiKeyAll, fetcher);
+const { data: labelDataFromSWR } = useSWR(apiKeyLabel, fetcher);
+
+useEffect(() => {
+  if (allDataFromSWR && allDataFromSWR.value === 1) {
+    setAllData(allDataFromSWR.data)
+  }
+}, [allDataFromSWR])
+
+useEffect(() => {
+  if (labelDataFromSWR && labelDataFromSWR.value === 1) {
+    setLabelData(labelDataFromSWR.data)
+  }
+}, [labelDataFromSWR])
+
+
+////////////////////////////////////////////////////////////////
+
+
+
 
   const handleSelect = (value: string) => {
     console.log(`Seleccionaste: ${value}`);
@@ -78,9 +105,10 @@ export const ContentProvider: FC<Props> = ({ children }) => {
 
   const creaetUpdate = async (data: any) => {
     const response = await PostRoute(`Habitaciones/${!data?.id ? 'create' : 'update'}`, {...data, usuario:'81816'});
-    all();
+    // all();
     handleClose();
     console.log(response.message);
+    mutate(apiKeyAll);
 };
 
 
@@ -109,7 +137,8 @@ export const ContentProvider: FC<Props> = ({ children }) => {
       id: data.id,
       estado: data.idEstado === 1 ? 0 : 1,
     })
-    all();
+    // all();
+    mutate(apiKeyAll);
   };
   console.log(oneData,"SOY EL ONE DATA")
 
@@ -132,9 +161,9 @@ export const ContentProvider: FC<Props> = ({ children }) => {
     handleSelect,
   };
 
-  useEffect(() => {
-    all();
-  }, []);
+  // useEffect(() => {
+  //   all();
+  // }, []);
 
   return <ContentContext.Provider value={value}>{children}</ContentContext.Provider>;
 };

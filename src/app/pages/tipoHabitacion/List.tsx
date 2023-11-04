@@ -23,7 +23,7 @@ export const List = () => {
           const includes =
             // item.noInventario.includes(value) ||
             // item.noBienSicoin.includes(value) ||
-            item.nombre.toLowerCase().startsWith(value.toLowerCase())
+            item.nombre.toLowerCase().includes(value.toLowerCase())
 
           if (startsWith) {
             return startsWith
@@ -45,6 +45,15 @@ export const List = () => {
       center: true,
       cell: (row: any) => row.nombre,
     },
+    
+    {
+      name: 'Descripción',
+      column: 'descripcion',
+      selector: (row: any) => row.descripcion,
+      sortable: true,
+      center: true,
+      cell: (row: any) => row.descripcion,
+    },
     {
       name: 'Estado',
       column: 'estado',
@@ -63,14 +72,6 @@ export const List = () => {
           )}
         </>
       ),
-    },
-    {
-      name: 'Descripción',
-      column: 'descripcion',
-      selector: (row: any) => row.descripcion,
-      sortable: true,
-      center: true,
-      cell: (row: any) => row.descripcion,
     },
     {
       name: 'Acciones',
